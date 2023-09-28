@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 
 
 const register = (req,res)=>{
+  try {
     const q = "SELECT * FROM users WHERE email = ? OR username = ?";
 
     db.query(q, [req.body.email, req.body.username], (err,data)=>{
@@ -24,6 +25,9 @@ const register = (req,res)=>{
           });
        
     })
+  } catch (error) {
+    return res.status(400).json({success:false,error:error})
+  }
 }
 
 const login =async (req,res)=>{

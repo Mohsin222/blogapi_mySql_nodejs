@@ -4,6 +4,7 @@ const express =require('express')
 const multer =require('multer')
 
 const authRoutes =require("./routes/auth_route")
+const postsRoutes =require("./routes/post_route")
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "../client/public/upload");
+      cb(null, "./public/upload/");
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + file.originalname);
@@ -32,6 +33,8 @@ const storage = multer.diskStorage({
 
 
   app.use("/api/auth", authRoutes);
+  app.use("/api/post", postsRoutes);
+
 
 
   app.listen(8800, () => {
